@@ -1,12 +1,9 @@
-package ymh.example.com.sanrennews;
+package ymh.example.com.sanrennews.ui;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.view.LayoutInflater;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -17,7 +14,15 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import java.util.ArrayList;
-import java.util.HashSet;
+
+import ymh.example.com.sanrennews.R;
+import ymh.example.com.sanrennews.adapter.MyFragmentPagerAdapter;
+import ymh.example.com.sanrennews.fragment.GaoxiaoFragment;
+import ymh.example.com.sanrennews.fragment.KejiFragment;
+import ymh.example.com.sanrennews.fragment.LuntanFragment;
+import ymh.example.com.sanrennews.fragment.MeinvFragment;
+import ymh.example.com.sanrennews.fragment.ToutiaoFragment;
+import ymh.example.com.sanrennews.fragment.TuijianFragment;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -26,22 +31,33 @@ public class MainActivity extends AppCompatActivity
     private TabLayout mTabLayout;
     private ViewPager mViewPager;
     private DrawerLayout drawer;
-    private FragmentAdapter mAdapter;
-    static ArrayList<View> viewContainter = new ArrayList<View>();
     static ArrayList<String> titleContainer = new ArrayList<String>();
+    private ArrayList<Fragment> fragmentList;
+    MyFragmentPagerAdapter myFragmentPagerAdapter;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        findViews();
+        initNavigation();
+        initViewpager();
+
+    }
+
+    private void findViews() {
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mToolbar.setTitle(R.string.app_name);
-        mTabLayout = (TabLayout) this.findViewById(R.id.tab_layout);
-        mViewPager = (ViewPager) this.findViewById(R.id.view_pager);
+        mTabLayout = (TabLayout) findViewById(R.id.tab_layout);
+        mViewPager = (ViewPager) findViewById(R.id.view_pager);
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+    }
+
+    private void initNavigation() {
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
@@ -49,43 +65,43 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        initTitle();
-
-        View view1 = LayoutInflater.from(this).inflate(R.layout.tab1, null);
-        View view2 = LayoutInflater.from(this).inflate(R.layout.tab2, null);
-        View view3 = LayoutInflater.from(this).inflate(R.layout.tab3, null);
-        View view4 = LayoutInflater.from(this).inflate(R.layout.tab4, null);
-        View view5 = LayoutInflater.from(this).inflate(R.layout.tab5, null);
-        View view6 = LayoutInflater.from(this).inflate(R.layout.tab6, null);
-        View view7 = LayoutInflater.from(this).inflate(R.layout.tab7, null);
-        //viewpager开始添加view
-        viewContainter.add(view1);
-        viewContainter.add(view2);
-        viewContainter.add(view3);
-        viewContainter.add(view4);
-        viewContainter.add(view5);
-        viewContainter.add(view6);
-        viewContainter.add(view7);
-
-        mAdapter = new FragmentAdapter();
-        mAdapter = new FragmentAdapter();
-        mAdapter = new FragmentAdapter();
-
-        mViewPager.setAdapter(mAdapter);
-        mTabLayout.setupWithViewPager(mViewPager);
-        mTabLayout.setTabsFromPagerAdapter(mAdapter);
-
     }
+
+    private void initViewpager() {
+        initTitle();
+        fragmentList = new ArrayList<Fragment>();
+        Fragment tuijianFragment = new TuijianFragment();
+        Fragment meinvFragment = new MeinvFragment();
+        Fragment kejiFragment = new KejiFragment();
+        Fragment toutiaoFragment = new ToutiaoFragment();
+        Fragment gaoxiaoFragment = new GaoxiaoFragment();
+        Fragment luntanFragment = new LuntanFragment();
+        fragmentList.add(tuijianFragment);
+        fragmentList.add(meinvFragment);
+        fragmentList.add(kejiFragment);
+        fragmentList.add(toutiaoFragment);
+        fragmentList.add(gaoxiaoFragment);
+        fragmentList.add(luntanFragment);
+
+        myFragmentPagerAdapter = new MyFragmentPagerAdapter(getSupportFragmentManager(), fragmentList, titleContainer);
+        mViewPager.setAdapter(myFragmentPagerAdapter);
+        mViewPager.setCurrentItem(0);//设置当前显示标签页为第一页
+        mTabLayout.setupWithViewPager(mViewPager);
+        mTabLayout.setTabsFromPagerAdapter(myFragmentPagerAdapter);
+    }
+
 
     private static void initTitle() {
         //页签项
         titleContainer.add("推荐");
-        titleContainer.add("娱乐");
-        titleContainer.add("汽车");
-        titleContainer.add("科技");
+        titleContainer.add("美女");
         titleContainer.add("搞笑");
-        titleContainer.add("焦点");
         titleContainer.add("影视");
+        titleContainer.add("科技");
+        titleContainer.add("论坛");
+//        titleContainer.add("搞笑");
+//        titleContainer.add("焦点");
+//        titleContainer.add("影视");
     }
 
     @Override
