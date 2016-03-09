@@ -15,6 +15,8 @@ import android.view.MenuItem;
 
 import java.util.ArrayList;
 
+import me.imid.swipebacklayout.lib.SwipeBackLayout;
+import me.imid.swipebacklayout.lib.app.SwipeBackActivity;
 import ymh.example.com.sanrennews.R;
 import ymh.example.com.sanrennews.adapter.MyFragmentPagerAdapter;
 import ymh.example.com.sanrennews.fragment.GaoxiaoFragment;
@@ -35,12 +37,14 @@ public class MainActivity extends AppCompatActivity
     private ArrayList<Fragment> fragmentList;
     MyFragmentPagerAdapter myFragmentPagerAdapter;
     private Toolbar toolbar;
+    private SwipeBackLayout mSwipeBackLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         findViews();
+
         initNavigation();
         initViewpager();
 
