@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import ymh.example.com.sanrennews.R;
 import ymh.example.com.sanrennews.adapter.MyRecyclerViewAdapter;
 import ymh.example.com.sanrennews.bean.JsonBean;
+import ymh.example.com.sanrennews.utils.HttpUtils;
 
 /**
  * Created by ymh on 2016/3/8.
@@ -42,7 +43,7 @@ public class MeinvFragment extends Fragment {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            datas = (gson.fromJson(msg.getData().getString("data"), new TypeToken<ArrayList<JsonBean>>() {
+            datas = (gson.fromJson(msg.getData().getString("content"), new TypeToken<ArrayList<JsonBean>>() {
             }.getType()));
             mAdapter = new MyRecyclerViewAdapter(getActivity(), datas);
             mRecyclerView.setAdapter(mAdapter);
@@ -54,16 +55,8 @@ public class MeinvFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_layout, container, false);
         gson = new Gson();
         getCacheData();
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    getData();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        }).start();
+        HttpUtils.getData(url, handler);
+
 //        mAdapter.notifyDataSetChanged();
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerview);
         mLayoutManager = new LinearLayoutManager(getActivity());
@@ -80,30 +73,4 @@ public class MeinvFragment extends Fragment {
         }.getType()));
     }
 
-    private void getData() {
-        OkHttpClient client = new OkHttpClient();
-        Request request = new Request.Builder()
-                .url(url)
-                .build();
-        client.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(Request request, IOException e) {
-
-            }
-
-            @Override
-            public void onResponse(Response response) throws IOException {
-                //NOT UI Thread
-                if (response.isSuccessful()) {
-                    resString = response.body().string();
-
-                    Message msg = new Message();
-                    Bundle b = new Bundle();
-                    b.putString("data", resString);
-                    msg.setData(b);
-                    handler.sendMessage(msg);
-                }
-            }
-        });
-    }
 }

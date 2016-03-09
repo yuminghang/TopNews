@@ -26,13 +26,12 @@ import ymh.example.com.sanrennews.ui.WebviewActivity;
  */
 public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAdapter.MyViewHolder> {
     private Context context;
-    private  ArrayList<JsonBean> list;
+    private ArrayList<JsonBean> list;
 
     public MyRecyclerViewAdapter(Context context, ArrayList<JsonBean> list) {
         this.context = context;
         this.list = list;
     }
-
 
 
     @Override
@@ -70,8 +69,10 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
                 public void onClick(View v) {
 //                    Toast.makeText(context,"当前点击的位置"+getLayoutPosition(),Toast.LENGTH_SHORT).show();
                     Bundle bundle = new Bundle();
-                    bundle.putString("data",  list.get(getLayoutPosition()).getH());
-                    Intent intent=new Intent(context,WebviewActivity.class);
+                    bundle.putString("url", list.get(getLayoutPosition()).getH());
+                    bundle.putString("title", list.get(getLayoutPosition()).getTitle());
+
+                    Intent intent = new Intent(context, WebviewActivity.class);
                     intent.putExtras(bundle);
                     context.startActivity(intent);
                 }
