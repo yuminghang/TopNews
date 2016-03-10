@@ -10,8 +10,11 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -25,143 +28,85 @@ import ymh.example.com.sanrennews.fragment.LuntanFragment;
 import ymh.example.com.sanrennews.fragment.MeinvFragment;
 import ymh.example.com.sanrennews.fragment.ToutiaoFragment;
 import ymh.example.com.sanrennews.fragment.TuijianFragment;
+import ymh.example.com.sanrennews.fragment.YingshiFragment;
+import ymh.example.com.sanrennews.utils.UrlUtils;
 
-public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity {
 
-    private Toolbar mToolbar;
+    private long exitTime;
     private TabLayout mTabLayout;
     private ViewPager mViewPager;
-    private DrawerLayout drawer;
+    private LinearLayout linear_layout;
     static ArrayList<String> titleContainer = new ArrayList<String>();
     private ArrayList<Fragment> fragmentList;
     MyFragmentPagerAdapter myFragmentPagerAdapter;
-    private Toolbar toolbar;
-    private SwipeBackLayout mSwipeBackLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         findViews();
-
-        initNavigation();
         initViewpager();
-
     }
 
     private void findViews() {
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        mToolbar.setTitle(R.string.app_name);
         mTabLayout = (TabLayout) findViewById(R.id.tab_layout);
         mViewPager = (ViewPager) findViewById(R.id.view_pager);
-        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        linear_layout = (LinearLayout) findViewById(R.id.linear_layout);
     }
 
-    private void initNavigation() {
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
-        toggle.syncState();
-
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
-    }
 
     private void initViewpager() {
         initTitle();
         fragmentList = new ArrayList<Fragment>();
-        Fragment tuijianFragment = new TuijianFragment();
-        Fragment meinvFragment = new MeinvFragment();
-        Fragment kejiFragment = new KejiFragment();
-        Fragment toutiaoFragment = new ToutiaoFragment();
-        Fragment gaoxiaoFragment = new GaoxiaoFragment();
-        Fragment luntanFragment = new LuntanFragment();
+        Fragment tuijianFragment = new TuijianFragment(UrlUtils.GAOXIAO_URL);
+        Fragment gaoxiaoFragment = new GaoxiaoFragment(UrlUtils.GAOXIAO_URL);
+        Fragment meinvFragment = new MeinvFragment(UrlUtils.MEINV_URL);
+        Fragment yingshiFragment = new YingshiFragment(UrlUtils.YINGSHI_URL);
+        Fragment kejiFragment = new KejiFragment(UrlUtils.KEJI_URL);
+//        Fragment toutiaoFragment = new GaoxiaoFragment(UrlUtils.);
+
         fragmentList.add(tuijianFragment);
-        fragmentList.add(meinvFragment);
-        fragmentList.add(kejiFragment);
-        fragmentList.add(toutiaoFragment);
         fragmentList.add(gaoxiaoFragment);
-        fragmentList.add(luntanFragment);
+        fragmentList.add(meinvFragment);
+        fragmentList.add(yingshiFragment);
+        fragmentList.add(kejiFragment);
 
         myFragmentPagerAdapter = new MyFragmentPagerAdapter(getSupportFragmentManager(), fragmentList, titleContainer);
         mViewPager.setAdapter(myFragmentPagerAdapter);
         mViewPager.setCurrentItem(0);//设置当前显示标签页为第一页
         mTabLayout.setupWithViewPager(mViewPager);
         mTabLayout.setTabsFromPagerAdapter(myFragmentPagerAdapter);
+
     }
 
 
     private static void initTitle() {
         //页签项
         titleContainer.add("推荐");
-        titleContainer.add("美女");
         titleContainer.add("搞笑");
+        titleContainer.add("美女");
         titleContainer.add("影视");
         titleContainer.add("科技");
-        titleContainer.add("论坛");
 //        titleContainer.add("搞笑");
 //        titleContainer.add("焦点");
 //        titleContainer.add("影视");
     }
 
     @Override
-    public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK
+                && event.getAction() == KeyEvent.ACTION_DOWN) {
+            if ((System.currentTimeMillis() - exitTime) > 2000) {
+                Toast.makeText(this, "再按一次退出程序", Toast.LENGTH_SHORT).show();
+                exitTime = System.currentTimeMillis();
+            } else {
+                finish();
+            }
             return true;
         }
-
-        return super.onOptionsItemSelected(item);
+        return super.onKeyDown(keyCode, event);
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
-    @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
-
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
-        }
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
-    }
 }

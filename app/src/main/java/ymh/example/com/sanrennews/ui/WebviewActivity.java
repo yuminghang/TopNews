@@ -27,8 +27,8 @@ public class WebviewActivity extends SwipeBackActivity {
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             content = msg.getData().getString("content");
-            spilt(content);
-            webview.loadDataWithBaseURL("", HttpUtils.getHtml(content), "text/html", "utf-8", "");
+//            spilt(content);
+            webview.loadDataWithBaseURL("", content, "text/html", "utf-8", "");
         }
     };
 
@@ -53,8 +53,8 @@ public class WebviewActivity extends SwipeBackActivity {
         webview.getSettings().setJavaScriptEnabled(true);
         webview.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
         HttpUtils.getData(url, handler);
-        webview.getSettings().setBuiltInZoomControls(true); //显示放大缩小 controler
-        webview.getSettings().setSupportZoom(true); //可以缩放
+//        webview.getSettings().setBuiltInZoomControls(true); //显示放大缩小 controler
+//        webview.getSettings().setSupportZoom(true); //可以缩放
 //        webview.loadUrl(data);
     }
 }
