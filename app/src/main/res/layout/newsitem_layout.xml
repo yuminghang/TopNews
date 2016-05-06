@@ -4,15 +4,15 @@
     android:layout_height="wrap_content"
     android:background="@color/almost_white">
 
-    <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="4dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginTop="4dp"
-        card_view:cardBackgroundColor="@android:color/white"
-        card_view:cardElevation="3dp">
+    <!--<android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_marginBottom="4dp"-->
+        <!--android:layout_marginLeft="8dp"-->
+        <!--android:layout_marginRight="8dp"-->
+        <!--android:layout_marginTop="4dp"-->
+        <!--card_view:cardBackgroundColor="@android:color/white"-->
+        <!--card_view:cardElevation="3dp">-->
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -35,15 +35,15 @@
                     android:layout_width="100dp"
                     android:layout_height="80dp"
                     android:scaleType="fitXY"
-                    android:layout_marginLeft="@dimen/pic_marginleft"
-                    android:layout_marginTop="@dimen/pic_margintop"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="@dimen/pic_marginbottom"
                     android:layout_marginBottom="@dimen/pic_marginbottom" />
                 <ImageView
                     android:id="@+id/iv_pic2"
                     android:layout_width="100dp"
                     android:layout_height="80dp"
                     android:scaleType="fitXY"
-                    android:layout_marginLeft="@dimen/pic_marginleft"
+                    android:layout_marginLeft="16dp"
                     android:layout_marginTop="@dimen/pic_margintop"
                     android:layout_marginBottom="@dimen/pic_marginbottom"/>
                 <ImageView
@@ -51,10 +51,11 @@
                     android:layout_width="100dp"
                     android:layout_height="80dp"
                     android:scaleType="fitXY"
-                    android:layout_marginLeft="@dimen/pic_marginleft"
+                    android:layout_marginLeft="16dp"
                     android:layout_marginTop="@dimen/pic_margintop"
                     android:layout_marginBottom="@dimen/pic_marginbottom" />
             </LinearLayout>
         </LinearLayout>
-    </android.support.v7.widget.CardView>
+    <!--</android.support.v7.widget.CardView>-->
+
 </RelativeLayout>

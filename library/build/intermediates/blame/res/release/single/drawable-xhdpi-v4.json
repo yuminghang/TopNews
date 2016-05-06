@@ -1,11 +1,11 @@
 [
     {
-        "merged": "C:\\Users\\ymh\\Desktop\\SanRenNews\\library\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\abc_textfield_search_default_mtrl_alpha.9.png",
-        "source": "C:\\Users\\ymh\\Desktop\\SanRenNews\\library\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\22.2.0\\res\\drawable-xhdpi\\abc_textfield_search_default_mtrl_alpha.9.png"
-    },
-    {
         "merged": "C:\\Users\\ymh\\Desktop\\SanRenNews\\library\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\shadow_bottom.png",
         "source": "C:\\Users\\ymh\\Desktop\\SanRenNews\\library\\src\\main\\res\\drawable-xhdpi\\shadow_bottom.png"
+    },
+    {
+        "merged": "C:\\Users\\ymh\\Desktop\\SanRenNews\\library\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\abc_textfield_search_default_mtrl_alpha.9.png",
+        "source": "C:\\Users\\ymh\\Desktop\\SanRenNews\\library\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\22.2.0\\res\\drawable-xhdpi\\abc_textfield_search_default_mtrl_alpha.9.png"
     },
     {
         "merged": "C:\\Users\\ymh\\Desktop\\SanRenNews\\library\\build\\intermediates\\res\\merged\\release\\drawable-xhdpi-v4\\abc_list_pressed_holo_dark.9.png",

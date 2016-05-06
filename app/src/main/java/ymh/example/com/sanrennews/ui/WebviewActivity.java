@@ -2,11 +2,14 @@ package ymh.example.com.sanrennews.ui;
 
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.view.Window;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.widget.ProgressBar;
 
 import java.util.ArrayList;
 
@@ -28,9 +31,12 @@ public class WebviewActivity extends SwipeBackActivity {
             super.handleMessage(msg);
             content = msg.getData().getString("content");
 //            spilt(content);
-            webview.loadDataWithBaseURL("", content, "text/html", "utf-8", "");
+            webview.loadDataWithBaseURL("", HttpUtils.getHtml(content), "text/html", "utf-8", "");
+            pb.setVisibility(View.INVISIBLE);
         }
-    };
+    };//HttpUtils.getHtml(content)
+    private SwipeRefreshLayout swipeRefreshLayout;
+    private static ProgressBar pb;
 
     public void spilt(String s) {
         int start = s.indexOf("投诉指引");
@@ -52,6 +58,8 @@ public class WebviewActivity extends SwipeBackActivity {
         webview = (WebView) findViewById(R.id.webView1);
         webview.getSettings().setJavaScriptEnabled(true);
         webview.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
+        pb = (ProgressBar) findViewById(R.id.pb);
+        pb.setVisibility(View.VISIBLE);
         HttpUtils.getData(url, handler);
 //        webview.getSettings().setBuiltInZoomControls(true); //显示放大缩小 controler
 //        webview.getSettings().setSupportZoom(true); //可以缩放

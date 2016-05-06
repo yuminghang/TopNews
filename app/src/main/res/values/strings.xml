@@ -5,6 +5,6 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
-    <string name="app_name">头条</string>
-    <string name="app_label">头条新闻</string>
+    <string name="app_name">热点</string>
+    <string name="app_label">热点新闻</string>
 </resources>

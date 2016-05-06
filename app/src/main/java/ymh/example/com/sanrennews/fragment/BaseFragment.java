@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,11 +14,10 @@ import android.view.ViewGroup;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import jp.wasabeef.recyclerview.adapters.AlphaInAnimationAdapter;
-import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
 import ymh.example.com.sanrennews.R;
 import ymh.example.com.sanrennews.adapter.MyRecyclerViewAdapter;
 import ymh.example.com.sanrennews.bean.jsonbean2;
+import ymh.example.com.sanrennews.utils.DividerLine;
 import ymh.example.com.sanrennews.utils.HttpUtils;
 import ymh.example.com.sanrennews.utils.UrlUtils;
 
@@ -33,6 +33,7 @@ public class BaseFragment extends Fragment {
     private String resString;
     private Gson gson;
     private String url;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     public BaseFragment(String url) {
         this.url = url;
@@ -45,10 +46,11 @@ public class BaseFragment extends Fragment {
             datas = (gson.fromJson(msg.getData().getString("content"), new TypeToken<jsonbean2>() {
             }.getType()));
             mAdapter = new MyRecyclerViewAdapter(getActivity(), datas);
-            AlphaInAnimationAdapter alphaAdapter = new AlphaInAnimationAdapter(mAdapter);
-            ScaleInAnimationAdapter scaleInAnimationAdapter = new ScaleInAnimationAdapter(alphaAdapter);
-            scaleInAnimationAdapter.setFirstOnly(false);
-            mRecyclerView.setAdapter(scaleInAnimationAdapter);
+            mAdapter.notifyDataSetChanged();
+//            AlphaInAnimationAdapter alphaAdapter = new AlphaInAnimationAdapter(mAdapter);
+//            ScaleInAnimationAdapter scaleInAnimationAdapter = new ScaleInAnimationAdapter(alphaAdapter);
+//            scaleInAnimationAdapter.setFirstOnly(true);
+            mRecyclerView.setAdapter(mAdapter);
         }
     };
 
@@ -61,13 +63,32 @@ public class BaseFragment extends Fragment {
 
 //        mAdapter.notifyDataSetChanged();
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerview);
+
+        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.id_swipe_ly);
+        swipeRefreshLayout.setColorSchemeResources(R.color.goldenrod, R.color.chocolate, R.color.crimson);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                // TODO Auto-generated method stub
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        swipeRefreshLayout.setRefreshing(false);
+                    }
+                }, 6000);
+            }
+        });
         mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
         mAdapter = new MyRecyclerViewAdapter(getActivity(), datas);
-        AlphaInAnimationAdapter alphaAdapter = new AlphaInAnimationAdapter(mAdapter);
-        ScaleInAnimationAdapter scaleInAnimationAdapter = new ScaleInAnimationAdapter(alphaAdapter);
-        scaleInAnimationAdapter.setFirstOnly(false);
-        mRecyclerView.setAdapter(scaleInAnimationAdapter);
+//        AlphaInAnimationAdapter alphaAdapter = new AlphaInAnimationAdapter(mAdapter);
+//        ScaleInAnimationAdapter scaleInAnimationAdapter = new ScaleInAnimationAdapter(alphaAdapter);
+//        scaleInAnimationAdapter.setFirstOnly(false);
+        //Ìí¼Ó·Ö¸îÏß
+        DividerLine dividerLine = new DividerLine(DividerLine.VERTICAL);
+        dividerLine.setSize(3);
+        dividerLine.setColor(0xFDDDDDDD);
+        mRecyclerView.addItemDecoration(dividerLine);
 
 
         return view;

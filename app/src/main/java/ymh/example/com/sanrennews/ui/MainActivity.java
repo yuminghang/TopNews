@@ -1,97 +1,138 @@
 package ymh.example.com.sanrennews.ui;
 
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
-import android.support.design.widget.NavigationView;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.KeyEvent;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.widget.LinearLayout;
+import android.view.View;
+import android.widget.FrameLayout;
+import android.widget.RadioButton;
 import android.widget.Toast;
 
-import java.util.ArrayList;
+import com.readystatesoftware.systembartint.SystemBarTintManager;
 
-import me.imid.swipebacklayout.lib.SwipeBackLayout;
-import me.imid.swipebacklayout.lib.app.SwipeBackActivity;
 import ymh.example.com.sanrennews.R;
-import ymh.example.com.sanrennews.adapter.MyFragmentPagerAdapter;
-import ymh.example.com.sanrennews.fragment.GaoxiaoFragment;
-import ymh.example.com.sanrennews.fragment.KejiFragment;
-import ymh.example.com.sanrennews.fragment.LuntanFragment;
-import ymh.example.com.sanrennews.fragment.MeinvFragment;
-import ymh.example.com.sanrennews.fragment.ToutiaoFragment;
-import ymh.example.com.sanrennews.fragment.TuijianFragment;
-import ymh.example.com.sanrennews.fragment.YingshiFragment;
+import ymh.example.com.sanrennews.fragment.DongtuFragment;
+import ymh.example.com.sanrennews.fragment.HomeFragment;
+import ymh.example.com.sanrennews.fragment.SettingFragment;
+import ymh.example.com.sanrennews.fragment.FaxianFragment;
 import ymh.example.com.sanrennews.utils.UrlUtils;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends FragmentActivity implements View.OnClickListener {
 
     private long exitTime;
-    private TabLayout mTabLayout;
-    private ViewPager mViewPager;
-    private LinearLayout linear_layout;
-    static ArrayList<String> titleContainer = new ArrayList<String>();
-    private ArrayList<Fragment> fragmentList;
-    MyFragmentPagerAdapter myFragmentPagerAdapter;
+
+    FrameLayout fragment_container;
+    HomeFragment homeFragment;
+    SettingFragment settingFragment;
+    FaxianFragment faxianFragment;
+    DongtuFragment dongtuFragment;
+    RadioButton btn_home, btn_dongtu, btn_faxian, btn_setting;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        findViews();
-        initViewpager();
+        // create our manager instance after the content view is set
+//        SystemBarTintManager tintManager = new SystemBarTintManager(this);
+//        // enable status bar tint
+//        tintManager.setStatusBarTintEnabled(true);
+//        // enable navigation bar tint
+//        tintManager.setNavigationBarTintEnabled(true);
+//        tintManager.setTintColor(R.color.title_color);
+        fragment_container = (FrameLayout) findViewById(R.id.fragment_container);
+        initRadioButton();
+        select(0);
     }
 
-    private void findViews() {
+    private void select(int i) {
+        FragmentManager fm = getSupportFragmentManager();  //获得Fragment管理器
+        FragmentTransaction ft = fm.beginTransaction(); //开启一个事务
 
-        mTabLayout = (TabLayout) findViewById(R.id.tab_layout);
-        mViewPager = (ViewPager) findViewById(R.id.view_pager);
-        linear_layout = (LinearLayout) findViewById(R.id.linear_layout);
+        hidtFragment(ft);   //先隐藏 Fragment
+
+        switch (i) {
+            case 0:
+                if (homeFragment == null) {
+                    homeFragment = new HomeFragment(this);
+                    ft.replace(R.id.fragment_container, homeFragment);
+                } else {
+                    ft.show(homeFragment);
+                }
+                break;
+            case 1:
+                if (dongtuFragment == null) {
+                    dongtuFragment = new DongtuFragment(this);
+                    ft.add(R.id.fragment_container, dongtuFragment);
+                } else {
+                    ft.show(dongtuFragment);
+                }
+                break;
+            case 2:
+                if (faxianFragment == null) {
+                    faxianFragment = new FaxianFragment(UrlUtils.NEIHAN_URL);
+                    ft.add(R.id.fragment_container, faxianFragment);
+                } else {
+                    ft.show(faxianFragment);
+                }
+                break;
+            case 3:
+                if (settingFragment == null) {
+                    settingFragment = new SettingFragment(this);
+                    ft.add(R.id.fragment_container, settingFragment);
+                } else {
+                    ft.show(settingFragment);
+                }
+                break;
+        }
+        ft.commit();   //提交事务
     }
 
-
-    private void initViewpager() {
-        initTitle();
-        fragmentList = new ArrayList<Fragment>();
-        Fragment tuijianFragment = new TuijianFragment(UrlUtils.GAOXIAO_URL);
-        Fragment gaoxiaoFragment = new GaoxiaoFragment(UrlUtils.GAOXIAO_URL);
-        Fragment meinvFragment = new MeinvFragment(UrlUtils.MEINV_URL);
-        Fragment yingshiFragment = new YingshiFragment(UrlUtils.YINGSHI_URL);
-        Fragment kejiFragment = new KejiFragment(UrlUtils.KEJI_URL);
-//        Fragment toutiaoFragment = new GaoxiaoFragment(UrlUtils.);
-
-        fragmentList.add(tuijianFragment);
-        fragmentList.add(gaoxiaoFragment);
-        fragmentList.add(meinvFragment);
-        fragmentList.add(yingshiFragment);
-        fragmentList.add(kejiFragment);
-
-        myFragmentPagerAdapter = new MyFragmentPagerAdapter(getSupportFragmentManager(), fragmentList, titleContainer);
-        mViewPager.setAdapter(myFragmentPagerAdapter);
-        mViewPager.setCurrentItem(0);//设置当前显示标签页为第一页
-        mTabLayout.setupWithViewPager(mViewPager);
-        mTabLayout.setTabsFromPagerAdapter(myFragmentPagerAdapter);
-
+    //隐藏所有Fragment
+    private void hidtFragment(FragmentTransaction fragmentTransaction) {
+        if (homeFragment != null) {
+            fragmentTransaction.hide(homeFragment);
+        }
+        if (dongtuFragment != null) {
+            fragmentTransaction.hide(dongtuFragment);
+        }
+        if (faxianFragment != null) {
+            fragmentTransaction.hide(faxianFragment);
+        }
+        if (settingFragment != null) {
+            fragmentTransaction.hide(settingFragment);
+        }
     }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btn_home:
+                select(0);
+                break;
+            case R.id.btn_dongtu:
+                select(1);
+                break;
+            case R.id.btn_faxian:
+                select(2);
+                break;
+            case R.id.btn_setting:
+                select(3);
+                break;
+        }
+    }
 
-    private static void initTitle() {
-        //页签项
-        titleContainer.add("推荐");
-        titleContainer.add("搞笑");
-        titleContainer.add("美女");
-        titleContainer.add("影视");
-        titleContainer.add("科技");
-//        titleContainer.add("搞笑");
-//        titleContainer.add("焦点");
-//        titleContainer.add("影视");
+    private void initRadioButton() {
+        btn_home = (RadioButton) findViewById(R.id.btn_home);
+        btn_dongtu = (RadioButton) findViewById(R.id.btn_dongtu);
+        btn_faxian = (RadioButton) findViewById(R.id.btn_faxian);
+        btn_setting = (RadioButton) findViewById(R.id.btn_setting);
+        btn_home.setOnClickListener(this);
+        btn_dongtu.setOnClickListener(this);
+        btn_faxian.setOnClickListener(this);
+        btn_setting.setOnClickListener(this);
     }
 
     @Override

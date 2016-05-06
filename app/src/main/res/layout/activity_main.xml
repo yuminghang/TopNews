@@ -5,18 +5,20 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include
-        layout="@layout/app_bar_main"
+    <FrameLayout
+        android:id="@+id/fragment_container"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="0dp"
+        android:layout_weight="0.925"></FrameLayout>
 
     <RadioGroup
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="0.075"
         android:orientation="horizontal">
 
         <RadioButton
-            android:id="@+id/home_RadioButton"
+            android:id="@+id/btn_home"
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_weight="1"
@@ -30,6 +32,8 @@
             android:textSize="10sp" />
 
         <RadioButton
+            android:id="@+id/btn_dongtu"
+
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_weight="1"
@@ -43,6 +47,8 @@
 
 
         <RadioButton
+            android:id="@+id/btn_faxian"
+
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_weight="1"
@@ -52,10 +58,11 @@
             android:paddingBottom="10dp"
 
             android:paddingTop="5dp"
-            android:text="话题"
+            android:text="发现"
             android:textSize="10sp" />
 
         <RadioButton
+            android:id="@+id/btn_setting"
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_weight="1"

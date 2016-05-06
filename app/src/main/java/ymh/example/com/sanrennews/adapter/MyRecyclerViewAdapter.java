@@ -89,7 +89,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             iv_Pic2 = (ImageView) view.findViewById(R.id.iv_pic2);
             iv_Pic3 = (ImageView) view.findViewById(R.id.iv_pic3);
             title = (TextView) view.findViewById(R.id.newstitle_TextView);
-            title.setOnClickListener(new View.OnClickListener() {
+            itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Bundle bundle = new Bundle();
@@ -112,6 +112,18 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             super(view);
             iv_Pic = (ImageView) view.findViewById(R.id.iv_pic);
             title = (TextView) view.findViewById(R.id.newstitle_TextView);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Bundle bundle = new Bundle();
+                    bundle.putString("url", list.getData().get(getLayoutPosition()).getUrl());
+                    bundle.putString("title", list.getData().get(getLayoutPosition()).getTitle());
+
+                    Intent intent = new Intent(context, WebviewActivity.class);
+                    intent.putExtras(bundle);
+                    context.startActivity(intent);
+                }
+            });
         }
     }
 }
