@@ -1,4 +1,4 @@
-package ymh.example.com.sanrennews.fragment.HomeDetailFragment;
+package ymh.example.com.sanrennews.fragment.homeDetailFragment;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -12,33 +12,23 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import ymh.example.com.sanrennews.R;
-import ymh.example.com.sanrennews.adapter.MyJingpinRecyclerViewAdapter;
 import ymh.example.com.sanrennews.adapter.MyRecyclerViewAdapter;
-import ymh.example.com.sanrennews.adapter.MyZakerRecyclerviewAdapter;
-import ymh.example.com.sanrennews.bean.jingpinbean;
-import ymh.example.com.sanrennews.bean.zakerjsonbean;
+import ymh.example.com.sanrennews.bean.toutiaobean;
 import ymh.example.com.sanrennews.utils.DividerLine;
 import ymh.example.com.sanrennews.utils.HttpUtils;
 
 /**
  * Created by ymh on 2016/3/8.
  */
-public class JingpinFragment extends Fragment {
+public class RedianFragment extends Fragment {
     private RecyclerView mRecyclerView;
-    private MyJingpinRecyclerViewAdapter mAdapter;
+    private MyRecyclerViewAdapter mAdapter;
     private LinearLayoutManager mLayoutManager;
     private Gson gson;
     private String url;
-    private SwipeRefreshLayout swipeRefreshLayout;
-    private jingpinbean datas;
 
-    public JingpinFragment(String url) {
+    public RedianFragment(String url) {
         this.url = url;
     }
 
@@ -47,15 +37,13 @@ public class JingpinFragment extends Fragment {
         @Override
         public void handleMessage(Message msg) {
             try {
-                datas = (gson.fromJson(msg.getData().getString("content"), new TypeToken<ArrayList<jingpinbean>>() {
-                }.getType()));
-                MyJingpinRecyclerViewAdapter mAdapter1 = new MyJingpinRecyclerViewAdapter(getActivity(), datas);
-                mRecyclerView.setAdapter(mAdapter1);
-                mAdapter1.notifyDataSetChanged();
+                toutiaobean content = gson.fromJson(msg.getData().getString("content"), toutiaobean.class);
+                mAdapter = new MyRecyclerViewAdapter(getActivity(), content);
+                mRecyclerView.setAdapter(mAdapter);
+                mAdapter.notifyDataSetChanged();
             } catch (Exception e) {
 
             }
-
         }
     };
 
@@ -65,22 +53,12 @@ public class JingpinFragment extends Fragment {
         gson = new Gson();
         HttpUtils.getData(url, handler);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerview);
-        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.id_swipe_ly);
-        swipeRefreshLayout.setColorSchemeResources(R.color.goldenrod, R.color.chocolate, R.color.crimson);
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                // TODO Auto-generated method stub
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        swipeRefreshLayout.setRefreshing(false);
-                    }
-                }, 5000);
-            }
-        });
         mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
+//        mAdapter = new MyRecyclerViewAdapter(getActivity(), datas1);
+//        AlphaInAnimationAdapter alphaAdapter = new AlphaInAnimationAdapter(mAdapter);
+//        ScaleInAnimationAdapter scaleInAnimationAdapter = new ScaleInAnimationAdapter(alphaAdapter);
+//        scaleInAnimationAdapter.setFirstOnly(false);
         DividerLine dividerLine = new DividerLine(DividerLine.VERTICAL);
         dividerLine.setSize(3);
         dividerLine.setColor(0xFDDDDDDD);

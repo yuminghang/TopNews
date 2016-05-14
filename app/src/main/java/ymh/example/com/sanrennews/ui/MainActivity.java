@@ -1,5 +1,6 @@
 package ymh.example.com.sanrennews.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -10,13 +11,11 @@ import android.widget.FrameLayout;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
-import com.readystatesoftware.systembartint.SystemBarTintManager;
-
 import ymh.example.com.sanrennews.R;
 import ymh.example.com.sanrennews.fragment.DongtuFragment;
 import ymh.example.com.sanrennews.fragment.HomeFragment;
-import ymh.example.com.sanrennews.fragment.SettingFragment;
 import ymh.example.com.sanrennews.fragment.FaxianFragment;
+import ymh.example.com.sanrennews.service.PushService;
 import ymh.example.com.sanrennews.utils.UrlUtils;
 
 public class MainActivity extends FragmentActivity implements View.OnClickListener {
@@ -25,16 +24,16 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
     FrameLayout fragment_container;
     HomeFragment homeFragment;
-    SettingFragment settingFragment;
     FaxianFragment faxianFragment;
     DongtuFragment dongtuFragment;
-    RadioButton btn_home, btn_dongtu, btn_faxian, btn_setting;
+    RadioButton btn_home, btn_dongtu, btn_faxian;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        startService(new Intent(this, PushService.class));
         // create our manager instance after the content view is set
 //        SystemBarTintManager tintManager = new SystemBarTintManager(this);
 //        // enable status bar tint
@@ -78,14 +77,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                     ft.show(faxianFragment);
                 }
                 break;
-            case 3:
-                if (settingFragment == null) {
-                    settingFragment = new SettingFragment(this);
-                    ft.add(R.id.fragment_container, settingFragment);
-                } else {
-                    ft.show(settingFragment);
-                }
-                break;
         }
         ft.commit();   //提交事务
     }
@@ -101,9 +92,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         if (faxianFragment != null) {
             fragmentTransaction.hide(faxianFragment);
         }
-        if (settingFragment != null) {
-            fragmentTransaction.hide(settingFragment);
-        }
     }
 
     @Override
@@ -118,9 +106,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             case R.id.btn_faxian:
                 select(2);
                 break;
-            case R.id.btn_setting:
-                select(3);
-                break;
         }
     }
 
@@ -128,11 +113,9 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         btn_home = (RadioButton) findViewById(R.id.btn_home);
         btn_dongtu = (RadioButton) findViewById(R.id.btn_dongtu);
         btn_faxian = (RadioButton) findViewById(R.id.btn_faxian);
-        btn_setting = (RadioButton) findViewById(R.id.btn_setting);
         btn_home.setOnClickListener(this);
         btn_dongtu.setOnClickListener(this);
         btn_faxian.setOnClickListener(this);
-        btn_setting.setOnClickListener(this);
     }
 
     @Override

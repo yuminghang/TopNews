@@ -39,7 +39,7 @@ public class FaxianRecyclerviewAdapter extends RecyclerView.Adapter<RecyclerView
         MyViewHolder myViewHolder = (MyViewHolder) holder;
 //        if (list.getData().get(position).getType() == 0) {
         myViewHolder.title.setText(list.getData().get(position).getTitle());
-        Glide.with(context).load(list.getData().get(position).getImgsmall()).into(myViewHolder.iv_Pic);
+        Glide.with(context).load(list.getData().get(position).getImgsmall()).placeholder(R.mipmap.ic_launcher).into(myViewHolder.iv_Pic);
 //        }
     }
 

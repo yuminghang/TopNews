@@ -1,4 +1,4 @@
-package ymh.example.com.sanrennews.fragment.HomeDetailFragment;
+package ymh.example.com.sanrennews.fragment.homeDetailFragment;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -34,7 +34,6 @@ public class TiyuFragment extends Fragment {
     private LinearLayoutManager mLayoutManager;
     private Gson gson;
     private String url;
-    private SwipeRefreshLayout swipeRefreshLayout;
 
     public TiyuFragment(String url) {
         this.url = url;
@@ -62,20 +61,6 @@ public class TiyuFragment extends Fragment {
         gson = new Gson();
         HttpUtils.getData(url, handler);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerview);
-        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.id_swipe_ly);
-        swipeRefreshLayout.setColorSchemeResources(R.color.goldenrod, R.color.chocolate, R.color.crimson);
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                // TODO Auto-generated method stub
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        swipeRefreshLayout.setRefreshing(false);
-                    }
-                }, 5000);
-            }
-        });
         mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
 //        mAdapter = new MyRecyclerViewAdapter(getActivity(), datas1);

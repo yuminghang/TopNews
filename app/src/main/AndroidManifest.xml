@@ -23,7 +23,11 @@
         <activity
             android:name=".ui.WebviewActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".ui.ZakerWebViewActivity"></activity>
+        <activity android:name=".ui.ZakerWebViewActivity" />
+
+        <service android:name=".service.PushService" />
+
+        <activity android:name=".ui.YiDianWebActivity" android:launchMode="singleTask"></activity>
     </application>
 
 </manifest>

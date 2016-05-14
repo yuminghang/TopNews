@@ -1,8 +1,6 @@
 package ymh.example.com.sanrennews.fragment;
 
-import android.annotation.TargetApi;
 import android.content.Context;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -16,11 +14,11 @@ import java.util.ArrayList;
 
 import ymh.example.com.sanrennews.R;
 import ymh.example.com.sanrennews.adapter.MyFragmentPagerAdapter;
-import ymh.example.com.sanrennews.fragment.HomeDetailFragment.JingpinFragment;
-import ymh.example.com.sanrennews.fragment.HomeDetailFragment.QicheFragment;
-import ymh.example.com.sanrennews.fragment.HomeDetailFragment.TiyuFragment;
-import ymh.example.com.sanrennews.fragment.HomeDetailFragment.ZakerFragment;
-import ymh.example.com.sanrennews.fragment.HomeDetailFragment.RedianFragment;
+import ymh.example.com.sanrennews.fragment.homeDetailFragment.JingpinFragment;
+import ymh.example.com.sanrennews.fragment.homeDetailFragment.QicheFragment;
+import ymh.example.com.sanrennews.fragment.homeDetailFragment.TiyuFragment;
+import ymh.example.com.sanrennews.fragment.homeDetailFragment.ZakerFragment;
+import ymh.example.com.sanrennews.fragment.homeDetailFragment.RedianFragment;
 import ymh.example.com.sanrennews.utils.UrlUtils;
 
 /**
@@ -56,7 +54,6 @@ public class HomeFragment extends Fragment {
         linear_layout = (LinearLayout) view.findViewById(R.id.linear_layout);
     }
 
-    @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
     private void initViewpager() {
         initTitle();
         fragmentList = new ArrayList<Fragment>();
