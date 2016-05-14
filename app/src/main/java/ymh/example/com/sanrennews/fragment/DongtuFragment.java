@@ -17,9 +17,6 @@ import java.util.ArrayList;
 import ymh.example.com.sanrennews.R;
 import ymh.example.com.sanrennews.adapter.MyFragmentPagerAdapter;
 import ymh.example.com.sanrennews.fragment.DongtuDetailFragment.dongtu_Dingyue_Fragment;
-import ymh.example.com.sanrennews.fragment.DongtuDetailFragment.dongtu_Tuijian_Fragment;
-import ymh.example.com.sanrennews.fragment.HomeDetailFragment.GaoxiaoFragment;
-import ymh.example.com.sanrennews.fragment.HomeDetailFragment.TuijianFragment;
 import ymh.example.com.sanrennews.utils.UrlUtils;
 
 /**
@@ -32,7 +29,7 @@ public class DongtuFragment extends Fragment {
     private TabLayout mTabLayout;
     private ViewPager mViewPager;
     private LinearLayout linear_layout;
-    private ArrayList<BaseFragment> fragmentList;
+    private ArrayList<Fragment> fragmentList;
     MyFragmentPagerAdapter myFragmentPagerAdapter;
     static ArrayList<String> titleContainer = new ArrayList<String>();
 
@@ -57,8 +54,8 @@ public class DongtuFragment extends Fragment {
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
     private void initViewpager() {
         initTitle();
-        fragmentList = new ArrayList<BaseFragment>();
-        dongtu_Tuijian_Fragment dongtu_Tuijian_Fragment = new dongtu_Tuijian_Fragment(UrlUtils.DONGTU_TUIJIAN_URL);
+        fragmentList = new ArrayList<Fragment>();
+        dongtu_Dingyue_Fragment dongtu_Tuijian_Fragment = new dongtu_Dingyue_Fragment(UrlUtils.DONGTU_TUIJIAN_URL);
         dongtu_Dingyue_Fragment dongtu_dingyue_fragment = new dongtu_Dingyue_Fragment(UrlUtils.DONGTU_DINGYUE_URL);
 
         fragmentList.add(dongtu_Tuijian_Fragment);

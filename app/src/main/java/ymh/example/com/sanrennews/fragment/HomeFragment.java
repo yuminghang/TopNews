@@ -16,11 +16,11 @@ import java.util.ArrayList;
 
 import ymh.example.com.sanrennews.R;
 import ymh.example.com.sanrennews.adapter.MyFragmentPagerAdapter;
-import ymh.example.com.sanrennews.fragment.HomeDetailFragment.GaoxiaoFragment;
-import ymh.example.com.sanrennews.fragment.HomeDetailFragment.KejiFragment;
-import ymh.example.com.sanrennews.fragment.HomeDetailFragment.MeinvFragment;
-import ymh.example.com.sanrennews.fragment.HomeDetailFragment.TuijianFragment;
-import ymh.example.com.sanrennews.fragment.HomeDetailFragment.YingshiFragment;
+import ymh.example.com.sanrennews.fragment.HomeDetailFragment.JingpinFragment;
+import ymh.example.com.sanrennews.fragment.HomeDetailFragment.QicheFragment;
+import ymh.example.com.sanrennews.fragment.HomeDetailFragment.TiyuFragment;
+import ymh.example.com.sanrennews.fragment.HomeDetailFragment.ZakerFragment;
+import ymh.example.com.sanrennews.fragment.HomeDetailFragment.RedianFragment;
 import ymh.example.com.sanrennews.utils.UrlUtils;
 
 /**
@@ -33,7 +33,7 @@ public class HomeFragment extends Fragment {
     private TabLayout mTabLayout;
     private ViewPager mViewPager;
     private LinearLayout linear_layout;
-    private ArrayList<BaseFragment> fragmentList;
+    private ArrayList<Fragment> fragmentList;
     MyFragmentPagerAdapter myFragmentPagerAdapter;
     static ArrayList<String> titleContainer = new ArrayList<String>();
 
@@ -59,19 +59,18 @@ public class HomeFragment extends Fragment {
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
     private void initViewpager() {
         initTitle();
-        fragmentList = new ArrayList<BaseFragment>();
-        TuijianFragment tuijianFragment = new TuijianFragment(UrlUtils.YINGSHI_URL);
-        GaoxiaoFragment gaoxiaoFragment = new GaoxiaoFragment(UrlUtils.GAOXIAO_URL);
-        MeinvFragment meinvFragment = new MeinvFragment(UrlUtils.MEINV_URL);
-        YingshiFragment yingshiFragment = new YingshiFragment(UrlUtils.YINGSHI_URL);
-        KejiFragment kejiFragment = new KejiFragment(UrlUtils.KEJI_URL);
-//        Fragment toutiaoFragment = new GaoxiaoFragment(UrlUtils.);
+        fragmentList = new ArrayList<Fragment>();
+        RedianFragment redianFragment = new RedianFragment(UrlUtils.REDIAN_URL);
+        ZakerFragment zakerFragment = new ZakerFragment(UrlUtils.ZAKER_URL);
+        TiyuFragment tiyuFragment = new TiyuFragment(UrlUtils.TIYU_URL);
+        QicheFragment qicheFragment = new QicheFragment(UrlUtils.QICHE_URL);
+        JingpinFragment jingpinFragment = new JingpinFragment(UrlUtils.JINGPIN_URL);
 
-        fragmentList.add(tuijianFragment);
-        fragmentList.add(gaoxiaoFragment);
-        fragmentList.add(meinvFragment);
-        fragmentList.add(yingshiFragment);
-        fragmentList.add(kejiFragment);
+        fragmentList.add(redianFragment);
+        fragmentList.add(zakerFragment);
+        fragmentList.add(tiyuFragment);
+        fragmentList.add(qicheFragment);
+        fragmentList.add(jingpinFragment);
         myFragmentPagerAdapter = new MyFragmentPagerAdapter(getChildFragmentManager(), fragmentList, titleContainer);
         mViewPager.setAdapter(myFragmentPagerAdapter);
         mViewPager.setCurrentItem(0);//设置当前显示标签页为第一页
@@ -82,11 +81,10 @@ public class HomeFragment extends Fragment {
 
     private static void initTitle() {
         //页签项
-        titleContainer.add("推荐");
-        titleContainer.add("搞笑");
-        titleContainer.add("风景");
-        titleContainer.add("影视");
-        titleContainer.add("科技");
+        titleContainer.add("热点");
+        titleContainer.add("关注");
+        titleContainer.add("体育");
+        titleContainer.add("汽车");
+        titleContainer.add("精品");
     }
-
 }

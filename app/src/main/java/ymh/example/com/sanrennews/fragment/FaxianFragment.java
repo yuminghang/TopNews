@@ -17,7 +17,7 @@ import jp.wasabeef.recyclerview.adapters.AlphaInAnimationAdapter;
 import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
 import ymh.example.com.sanrennews.R;
 import ymh.example.com.sanrennews.adapter.FaxianRecyclerviewAdapter;
-import ymh.example.com.sanrennews.bean.Faxianjsonbean;
+import ymh.example.com.sanrennews.bean.faxianbean;
 import ymh.example.com.sanrennews.utils.HttpUtils;
 import ymh.example.com.sanrennews.utils.UrlUtils;
 
@@ -28,9 +28,8 @@ public class FaxianFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private FaxianRecyclerviewAdapter mAdapter;
     private StaggeredGridLayoutManager mLayoutManager;
-    public Faxianjsonbean datas;
+    public faxianbean datas;
     private String cacheString = UrlUtils.CACHE_URL;
-    private String resString;
     private Gson gson;
     private String url;
 
@@ -42,7 +41,7 @@ public class FaxianFragment extends Fragment {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            datas = (gson.fromJson(msg.getData().getString("content"), new TypeToken<Faxianjsonbean>() {
+            datas = (gson.fromJson(msg.getData().getString("content"), new TypeToken<faxianbean>() {
             }.getType()));
             mAdapter = new FaxianRecyclerviewAdapter(getActivity(), datas);
             AlphaInAnimationAdapter alphaAdapter = new AlphaInAnimationAdapter(mAdapter);
@@ -56,9 +55,6 @@ public class FaxianFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.faxianfragment_layout, container, false);
         gson = new Gson();
-//        getCacheData();
-
-//        mAdapter.notifyDataSetChanged();
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerview);
         mLayoutManager = new StaggeredGridLayoutManager(1,StaggeredGridLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(mLayoutManager);
@@ -73,11 +69,6 @@ public class FaxianFragment extends Fragment {
 
 
         return view;
-    }
-
-    private void getCacheData() {
-        datas = (gson.fromJson(cacheString, new TypeToken<Faxianjsonbean>() {
-        }.getType()));
     }
 
 }

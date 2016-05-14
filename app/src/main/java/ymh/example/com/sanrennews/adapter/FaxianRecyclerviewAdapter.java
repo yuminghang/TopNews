@@ -1,8 +1,6 @@
 package ymh.example.com.sanrennews.adapter;
 
 import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,21 +11,18 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 
 import ymh.example.com.sanrennews.R;
-import ymh.example.com.sanrennews.bean.BudejieJsonBean;
-import ymh.example.com.sanrennews.bean.Faxianjsonbean;
-import ymh.example.com.sanrennews.bean.jsonbean2;
-import ymh.example.com.sanrennews.ui.WebviewActivity;
+import ymh.example.com.sanrennews.bean.faxianbean;
 
 /**
  * Created by ymh on 2016/3/11.
  */
 public class FaxianRecyclerviewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private Context context;
-    private Faxianjsonbean list;
+    private faxianbean list;
     private final int THREE_PIC = 1;
     private final int SINGL_EPIC = 0;
 
-    public FaxianRecyclerviewAdapter(Context context, Faxianjsonbean list) {
+    public FaxianRecyclerviewAdapter(Context context, faxianbean list) {
         this.context = context;
         this.list = list;
     }
@@ -44,7 +39,7 @@ public class FaxianRecyclerviewAdapter extends RecyclerView.Adapter<RecyclerView
         MyViewHolder myViewHolder = (MyViewHolder) holder;
 //        if (list.getData().get(position).getType() == 0) {
         myViewHolder.title.setText(list.getData().get(position).getTitle());
-        Glide.with(context).load(list.getData().get(position).getImgbig()).into(myViewHolder.iv_Pic);
+        Glide.with(context).load(list.getData().get(position).getImgsmall()).into(myViewHolder.iv_Pic);
 //        }
     }
 

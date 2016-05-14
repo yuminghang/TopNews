@@ -11,12 +11,10 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.ProgressBar;
 
-import java.util.ArrayList;
 
 import me.imid.swipebacklayout.lib.SwipeBackLayout;
 import me.imid.swipebacklayout.lib.app.SwipeBackActivity;
 import ymh.example.com.sanrennews.R;
-import ymh.example.com.sanrennews.bean.JsonBean;
 import ymh.example.com.sanrennews.utils.HttpUtils;
 
 public class WebviewActivity extends SwipeBackActivity {

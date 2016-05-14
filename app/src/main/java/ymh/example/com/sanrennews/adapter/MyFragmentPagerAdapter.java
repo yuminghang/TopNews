@@ -6,17 +6,17 @@ package ymh.example.com.sanrennews.adapter;
 
 import java.util.ArrayList;
 
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import ymh.example.com.sanrennews.fragment.BaseFragment;
 
 public class MyFragmentPagerAdapter extends FragmentPagerAdapter {
-    ArrayList<BaseFragment> list;
+    ArrayList<Fragment> list;
     ArrayList<String> titlelist;
 
 
-    public MyFragmentPagerAdapter(FragmentManager fm, ArrayList<BaseFragment> fragmentList, ArrayList<String> titleContainer) {
+    public MyFragmentPagerAdapter(FragmentManager fm, ArrayList<Fragment> fragmentList, ArrayList<String> titleContainer) {
         super(fm);
         this.list = fragmentList;
         this.titlelist = titleContainer;
@@ -28,7 +28,7 @@ public class MyFragmentPagerAdapter extends FragmentPagerAdapter {
     }
 
     @Override
-    public BaseFragment getItem(int arg0) {
+    public Fragment getItem(int arg0) {
         return list.get(arg0);
     }
 

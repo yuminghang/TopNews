@@ -1,5 +1,4 @@
-package ymh.example.com.sanrennews.fragment.DongtuDetailFragment;
-
+package ymh.example.com.sanrennews.fragment.HomeDetailFragment;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -13,27 +12,31 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import ymh.example.com.sanrennews.R;
-import ymh.example.com.sanrennews.adapter.MyDongtuRecyclerviewAdapter;
 import ymh.example.com.sanrennews.adapter.MyRecyclerViewAdapter;
-import ymh.example.com.sanrennews.bean.dongtubean;
-import ymh.example.com.sanrennews.bean.toutiaobean;
+import ymh.example.com.sanrennews.adapter.MyZakerRecyclerviewAdapter;
+import ymh.example.com.sanrennews.bean.zakerjsonbean;
 import ymh.example.com.sanrennews.utils.DividerLine;
 import ymh.example.com.sanrennews.utils.HttpUtils;
 
 /**
- * Created by ymh on 2016/3/11.
+ * Created by ymh on 2016/3/8.
  */
-public class dongtu_Dingyue_Fragment extends Fragment {
+public class ZakerFragment extends Fragment {
     private RecyclerView mRecyclerView;
-    private MyDongtuRecyclerviewAdapter mAdapter;
+    private MyRecyclerViewAdapter mAdapter;
     private LinearLayoutManager mLayoutManager;
     private Gson gson;
     private String url;
     private SwipeRefreshLayout swipeRefreshLayout;
+    private List<zakerjsonbean> datas;
 
-    public dongtu_Dingyue_Fragment(String url) {
+    public ZakerFragment(String url) {
         this.url = url;
     }
 
@@ -41,15 +44,11 @@ public class dongtu_Dingyue_Fragment extends Fragment {
     Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
-            try {
-                dongtubean content = gson.fromJson(msg.getData().getString("content"), dongtubean.class);
-                mAdapter = new MyDongtuRecyclerviewAdapter(getActivity(), content);
-                mRecyclerView.setAdapter(mAdapter);
-                mAdapter.notifyDataSetChanged();
-            } catch (Exception e) {
-
-            }
-
+            datas = (gson.fromJson(msg.getData().getString("content"), new TypeToken<ArrayList<zakerjsonbean>>() {
+            }.getType()));
+            MyZakerRecyclerviewAdapter mAdapter1 = new MyZakerRecyclerviewAdapter(getActivity(), datas);
+            mRecyclerView.setAdapter(mAdapter1);
+            mAdapter1.notifyDataSetChanged();
         }
     };
 
@@ -75,10 +74,6 @@ public class dongtu_Dingyue_Fragment extends Fragment {
         });
         mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
-//        mAdapter = new MyRecyclerViewAdapter(getActivity(), datas1);
-//        AlphaInAnimationAdapter alphaAdapter = new AlphaInAnimationAdapter(mAdapter);
-//        ScaleInAnimationAdapter scaleInAnimationAdapter = new ScaleInAnimationAdapter(alphaAdapter);
-//        scaleInAnimationAdapter.setFirstOnly(false);
         DividerLine dividerLine = new DividerLine(DividerLine.VERTICAL);
         dividerLine.setSize(3);
         dividerLine.setColor(0xFDDDDDDD);
